@@ -1,0 +1,142 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Polars as dplyr Introdution",
+    "section": "",
+    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl\nfrom great_tables import GT, html\nfrom sqlalchemy import true\nfrom great_tables._options import opt_table_font\nfrom great_tables._options import tab_options"
+  },
+  {
+    "objectID": "index.html#load-polars",
+    "href": "index.html#load-polars",
+    "title": "Polars as dplyr Introdution",
+    "section": "",
+    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl\nfrom great_tables import GT, html\nfrom sqlalchemy import true\nfrom great_tables._options import opt_table_font\nfrom great_tables._options import tab_options"
+  },
+  {
+    "objectID": "index.html#dataset",
+    "href": "index.html#dataset",
+    "title": "Polars as dplyr Introdution",
+    "section": "dataset",
+    "text": "dataset\n\ndf1 = pl.DataFrame(\n    {\n        \"id\": [1, 2, 3, 4, 5, 6],\n        \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"],\n        \"age\": [25, 30, 22, 40, 35, 28],\n        \"income\": [50000, 60000, 45000, 80000, 72000, 52000],\n        \"status\": [\"active\", \"inactive\", \"active\", \"active\", \"inactive\", \"active\"],\n        \"prefix_score1\": [10, 20, 30, 40, 50, 60],\n        \"prefix_score2\": [5, 15, 25, 35, 45, 55],\n    }\n)\n\ndf2 = pl.DataFrame({\"id\": [1, 2, 3, 7], \"city\": [\"NY\", \"LA\", \"Dallas\", \"Houston\"]})\n\ncolumn names as a the dataframe.\n\npl.DataFrame({\"Name of the dataframe\": list(df1.columns)})\n\n\nshape: (7, 1)\n\n\n\nName of the dataframe\n\n\nstr\n\n\n\n\n\"id\"\n\n\n\"group\"\n\n\n\"age\"\n\n\n\"income\"\n\n\n\"status\"\n\n\n\"prefix_score1\"\n\n\n\"prefix_score2\""
+  },
+  {
+    "objectID": "index.html#select",
+    "href": "index.html#select",
+    "title": "Polars as dplyr Introdution",
+    "section": ".select()",
+    "text": ".select()\n\ndf1.select([\"id\", \"age\", \"income\"]).head(10)\n\n\nshape: (6, 3)\n\n\n\nid\nage\nincome\n\n\ni64\ni64\ni64\n\n\n\n\n1\n25\n50000\n\n\n2\n30\n60000\n\n\n3\n22\n45000\n\n\n4\n40\n80000\n\n\n5\n35\n72000\n\n\n6\n28\n52000"
+  },
+  {
+    "objectID": "index.html#filter",
+    "href": "index.html#filter",
+    "title": "Polars as dplyr Introdution",
+    "section": ".filter()",
+    "text": ".filter()\n\ndf1.filter(pl.col(\"age\") &gt; 30)\n\n\nshape: (2, 7)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\n\n\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\n\n\n\n\n\n\n\n.filter() with chain method\n\n(\n    df1\n    .filter(pl.col(\"age\")&gt; 30)\n    .select([\"id\", \"group\", \"age\", \"income\"])\n)\n\n\nshape: (2, 4)\n\n\n\nid\ngroup\nage\nincome\n\n\ni64\nstr\ni64\ni64\n\n\n\n\n4\n\"B\"\n40\n80000\n\n\n5\n\"C\"\n35\n72000"
+  },
+  {
+    "objectID": "index.html#with_columns",
+    "href": "index.html#with_columns",
+    "title": "Polars as dplyr Introdution",
+    "section": ".with_columns()",
+    "text": ".with_columns()\n\ndf1.with_columns(\n    (pl.col(\"income\")/1000).alias(\"income_k\")\n).select(['income', \"income_k\"])\n\n\nshape: (6, 2)\n\n\n\nincome\nincome_k\n\n\ni64\nf64\n\n\n\n\n50000\n50.0\n\n\n60000\n60.0\n\n\n45000\n45.0\n\n\n80000\n80.0\n\n\n72000\n72.0\n\n\n52000\n52.0\n\n\n\n\n\n\nmutate with multiple columns\n\ndf1.with_columns(\n    pl.all().exclude(['status', 'group','id'])*2\n)\n\n\nshape: (6, 7)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\n\n\n\n\n1\n\"A\"\n50\n100000\n\"active\"\n20\n10\n\n\n2\n\"A\"\n60\n120000\n\"inactive\"\n40\n30\n\n\n3\n\"B\"\n44\n90000\n\"active\"\n60\n50\n\n\n4\n\"B\"\n80\n160000\n\"active\"\n80\n70\n\n\n5\n\"C\"\n70\n144000\n\"inactive\"\n100\n90\n\n\n6\n\"C\"\n56\n104000\n\"active\"\n120\n110\n\n\n\n\n\n\n\ndf1.with_columns(\n    [\n        (pl.col(col) * 2).alias(f\"{col}_prod2\")\n        for col in df1.columns\n        if col not in [\"status\", \"group\", \"id\"]\n    ]\n)\n\n\nshape: (6, 11)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\nage_prod2\nincome_prod2\nprefix_score1_prod2\nprefix_score2_prod2\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\ni64\ni64\ni64\ni64\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n50\n100000\n20\n10\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n60\n120000\n40\n30\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n44\n90000\n60\n50\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\n80\n160000\n80\n70\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\n70\n144000\n100\n90\n\n\n6\n\"C\"\n28\n52000\n\"active\"\n60\n55\n56\n104000\n120\n110"
+  },
+  {
+    "objectID": "index.html#sort",
+    "href": "index.html#sort",
+    "title": "Polars as dplyr Introdution",
+    "section": "sort()",
+    "text": "sort()\n\ndf1.sort(\"income\", descending=True) \n\n\nshape: (6, 7)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\n\n\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\n\n6\n\"C\"\n28\n52000\n\"active\"\n60\n55\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25"
+  },
+  {
+    "objectID": "index.html#rename",
+    "href": "index.html#rename",
+    "title": "Polars as dplyr Introdution",
+    "section": ".rename()",
+    "text": ".rename()\n\ndf1.rename({\"income\": \"annual_income\"}).select(['id', 'age', 'group', 'annual_income'])\n\n\nshape: (6, 4)\n\n\n\nid\nage\ngroup\nannual_income\n\n\ni64\ni64\nstr\ni64\n\n\n\n\n1\n25\n\"A\"\n50000\n\n\n2\n30\n\"A\"\n60000\n\n\n3\n22\n\"B\"\n45000\n\n\n4\n40\n\"B\"\n80000\n\n\n5\n35\n\"C\"\n72000\n\n\n6\n28\n\"C\"\n52000"
+  },
+  {
+    "objectID": "index.html#slice",
+    "href": "index.html#slice",
+    "title": "Polars as dplyr Introdution",
+    "section": ".slice()",
+    "text": ".slice()\n\ndf1.slice(0, 3)\n\n\nshape: (3, 7)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25"
+  },
+  {
+    "objectID": "index.html#select-with-aggregation",
+    "href": "index.html#select-with-aggregation",
+    "title": "Polars as dplyr Introdution",
+    "section": ".select() with aggregation",
+    "text": ".select() with aggregation\n\ndf1.select(\n    pl.col(\"income\").mean().round().alias(\"avg_income\"),\n    pl.col(\"age\").max().alias(\"max_age\"),\n)\n\n\nshape: (1, 2)\n\n\n\navg_income\nmax_age\n\n\nf64\ni64\n\n\n\n\n59833.0\n40"
+  },
+  {
+    "objectID": "index.html#group_by",
+    "href": "index.html#group_by",
+    "title": "Polars as dplyr Introdution",
+    "section": ".group_by()",
+    "text": ".group_by()\n\ndf1.group_by(\"status\").agg(\n    pl.col(\"income\").mean().round(decimals=2).alias(\"Average Income\"),\n    pl.col('age').min().alias(\"Young_Gens\")\n)\n\n\nshape: (2, 3)\n\n\n\nstatus\nAverage Income\nYoung_Gens\n\n\nstr\nf64\ni64\n\n\n\n\n\"active\"\n56750.0\n22\n\n\n\"inactive\"\n66000.0\n30"
+  },
+  {
+    "objectID": "index.html#group_by.count",
+    "href": "index.html#group_by.count",
+    "title": "Polars as dplyr Introdution",
+    "section": ".group_by().count()",
+    "text": ".group_by().count()\n\ndf1.group_by('status').len()\n\n\nshape: (2, 2)\n\n\n\nstatus\nlen\n\n\nstr\nu32\n\n\n\n\n\"active\"\n4\n\n\n\"inactive\"\n2"
+  },
+  {
+    "objectID": "index.html#left-join-how-left",
+    "href": "index.html#left-join-how-left",
+    "title": "Polars as dplyr Introdution",
+    "section": "Left join how = 'left'",
+    "text": "Left join how = 'left'\n\ndf_combined_left = df1.join(df2, on = \"id\", how=\"left\")\ndf_combined_left\n\n\nshape: (6, 8)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\ncity\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\nstr\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\"NY\"\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\"LA\"\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n\"Dallas\"\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\nnull\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\nnull\n\n\n6\n\"C\"\n28\n52000\n\"active\"\n60\n55\nnull"
+  },
+  {
+    "objectID": "index.html#right-join-how-right",
+    "href": "index.html#right-join-how-right",
+    "title": "Polars as dplyr Introdution",
+    "section": "Right join how = 'right'",
+    "text": "Right join how = 'right'\n\ndf_combined_right = df1.join(df2, on=\"id\", how=\"right\")\ndf_combined_right\n\n\nshape: (4, 8)\n\n\n\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\nid\ncity\n\n\nstr\ni64\ni64\nstr\ni64\ni64\ni64\nstr\n\n\n\n\n\"A\"\n25\n50000\n\"active\"\n10\n5\n1\n\"NY\"\n\n\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n2\n\"LA\"\n\n\n\"B\"\n22\n45000\n\"active\"\n30\n25\n3\n\"Dallas\"\n\n\nnull\nnull\nnull\nnull\nnull\nnull\n7\n\"Houston\""
+  },
+  {
+    "objectID": "index.html#inner-join-how-inner",
+    "href": "index.html#inner-join-how-inner",
+    "title": "Polars as dplyr Introdution",
+    "section": "Inner join how = \"inner\"",
+    "text": "Inner join how = \"inner\"\n\ndf_combined_inner = df1.join(df2, on=\"id\", how=\"inner\")\ndf_combined_inner\n\n\nshape: (3, 8)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\ncity\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\nstr\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\"NY\"\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\"LA\"\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n\"Dallas\""
+  },
+  {
+    "objectID": "index.html#outer-join-how-inner",
+    "href": "index.html#outer-join-how-inner",
+    "title": "Polars as dplyr Introdution",
+    "section": "Outer join how = \"inner\"",
+    "text": "Outer join how = \"inner\"\n\ndf_combined_inner = df1.join(df2, on=\"id\", how=\"inner\")\ndf_combined_inner\n\n\nshape: (3, 8)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\ncity\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\nstr\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\"NY\"\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\"LA\"\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n\"Dallas\""
+  },
+  {
+    "objectID": "index.html#selectors",
+    "href": "index.html#selectors",
+    "title": "Polars as dplyr Introdution",
+    "section": "Selectors",
+    "text": "Selectors\n\npl.all(), pl.col()\n\nselect by data type\n\n\ndf_combined_left.select(\n    pl.col(pl.Int64)\n)\n\n\nshape: (6, 5)\n\n\n\nid\nage\nincome\nprefix_score1\nprefix_score2\n\n\ni64\ni64\ni64\ni64\ni64\n\n\n\n\n1\n25\n50000\n10\n5\n\n\n2\n30\n60000\n20\n15\n\n\n3\n22\n45000\n30\n25\n\n\n4\n40\n80000\n40\n35\n\n\n5\n35\n72000\n50\n45\n\n\n6\n28\n52000\n60\n55\n\n\n\n\n\n\n\ndf_combined_left.select(pl.all().exclude([\"income_k\"]))\n\n\nshape: (6, 8)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\ncity\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\nstr\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\"NY\"\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\"LA\"\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n\"Dallas\"\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\nnull\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\nnull\n\n\n6\n\"C\"\n28\n52000\n\"active\"\n60\n55\nnull"
+  },
+  {
+    "objectID": "index.html#chained-conditional",
+    "href": "index.html#chained-conditional",
+    "title": "Polars as dplyr Introdution",
+    "section": "Chained conditional",
+    "text": "Chained conditional\n\ndf_combined_left.with_columns(\n    pl.when(pl.col(\"age\") &lt; 30).then(pl.lit(\"young\"))\n    .when(pl.col('age') &lt; 40)\n    .then(pl.lit(\"Mid\"))\n    .otherwise(pl.lit(\"Senior\"))\n    .alias(\"age_group\")\n)\n\n\nshape: (6, 9)\n\n\n\nid\ngroup\nage\nincome\nstatus\nprefix_score1\nprefix_score2\ncity\nage_group\n\n\ni64\nstr\ni64\ni64\nstr\ni64\ni64\nstr\nstr\n\n\n\n\n1\n\"A\"\n25\n50000\n\"active\"\n10\n5\n\"NY\"\n\"young\"\n\n\n2\n\"A\"\n30\n60000\n\"inactive\"\n20\n15\n\"LA\"\n\"Mid\"\n\n\n3\n\"B\"\n22\n45000\n\"active\"\n30\n25\n\"Dallas\"\n\"young\"\n\n\n4\n\"B\"\n40\n80000\n\"active\"\n40\n35\nnull\n\"Senior\"\n\n\n5\n\"C\"\n35\n72000\n\"inactive\"\n50\n45\nnull\n\"Mid\"\n\n\n6\n\"C\"\n28\n52000\n\"active\"\n60\n55\nnull\n\"young\""
+  },
+  {
+    "objectID": "index.html#prefix-selection",
+    "href": "index.html#prefix-selection",
+    "title": "Polars as dplyr Introdution",
+    "section": "Prefix selection",
+    "text": "Prefix selection\n\ndf_combined_inner.select(pl.col(\"^prefix.*$\"))\n\n\nshape: (3, 2)\n\n\n\nprefix_score1\nprefix_score2\n\n\ni64\ni64\n\n\n\n\n10\n5\n\n\n20\n15\n\n\n30\n25"
+  },
+  {
+    "objectID": "index.html#regex-in-pl.col",
+    "href": "index.html#regex-in-pl.col",
+    "title": "Polars as dplyr Introdution",
+    "section": "Regex in pl.col()",
+    "text": "Regex in pl.col()\n\nselecting the all columns containing score in the dataframe\n\n\ndf_combined_inner.select(pl.col(\"^.*score.*$\"))\n\n\nshape: (3, 2)\n\n\n\nprefix_score1\nprefix_score2\n\n\ni64\ni64\n\n\n\n\n10\n5\n\n\n20\n15\n\n\n30\n25\n\n\n\n\n\n\nusing polars selector\n\nimport polars.selectors as cs\n\ndf_combined_inner.select(cs.matches(\"score\"))\n\n\nshape: (3, 2)\n\n\n\nprefix_score1\nprefix_score2\n\n\ni64\ni64\n\n\n\n\n10\n5\n\n\n20\n15\n\n\n30\n25"
+  }
+]
