@@ -1,0 +1,218 @@
+---
+title: "Polars as dplyr Introdution"
+format:
+  html:
+    embed-resources: true
+    mainfont: "Roboto"
+    code-overflow: scroll
+    code-line-numbers: true
+highlight-style: darkly
+css: styles.css
+date: '2026-02-13'
+---
+
+## Load polars 🐻‍❄️
+- `uv pip install polars`
+- `uv pip install great_tables`
+- In this notebook a will try to attempt to use most used `dplyr` verbs that I have widely used in `r` Tidyverse Ecosystem.
+
+```{python}
+import polars as pl
+from great_tables import GT, html
+from sqlalchemy import true
+from great_tables._options import opt_table_font
+from great_tables._options import tab_options
+
+```
+
+## dataset
+
+```{python}
+# | label: create dataset
+
+df1 = pl.DataFrame(
+    {
+        "id": [1, 2, 3, 4, 5, 6],
+        "group": ["A", "A", "B", "B", "C", "C"],
+        "age": [25, 30, 22, 40, 35, 28],
+        "income": [50000, 60000, 45000, 80000, 72000, 52000],
+        "status": ["active", "inactive", "active", "active", "inactive", "active"],
+        "prefix_score1": [10, 20, 30, 40, 50, 60],
+        "prefix_score2": [5, 15, 25, 35, 45, 55],
+    }
+)
+
+df2 = pl.DataFrame({"id": [1, 2, 3, 7], "city": ["NY", "LA", "Dallas", "Houston"]})
+```
+**column names as a the dataframe.**
+```{python}
+pl.DataFrame({"Name of the dataframe": list(df1.columns)})
+```
+
+## `.select()`
+
+```{python}
+df1.select(["id", "age", "income"]).head(10)
+```
+
+## `.filter()` 
+```{python}
+df1.filter(pl.col("age") > 30)
+```
+
+### `.filter()` with *`chain`* method
+
+```{python}
+(
+    df1
+    .filter(pl.col("age")> 30)
+    .select(["id", "group", "age", "income"])
+)
+
+```
+
+## `.with_columns()`
+
+```{python}
+df1.with_columns(
+    (pl.col("income")/1000).alias("income_k")
+).select(['income', "income_k"])
+```
+
+__mutate with multiple columns__
+
+```{python}
+df1.with_columns(
+    pl.all().exclude(['status', 'group','id'])*2
+)
+```
+
+```{python}
+df1.with_columns(
+    [
+        (pl.col(col) * 2).alias(f"{col}_prod2")
+        for col in df1.columns
+        if col not in ["status", "group", "id"]
+    ]
+)
+```
+## `sort()`
+
+```{python}
+
+df1.sort("income", descending=True) 
+
+```
+
+## `.rename()`
+
+```{python}
+df1.rename({"income": "annual_income"}).select(['id', 'age', 'group', 'annual_income'])
+```
+
+## `.slice()`
+
+
+```{python}
+df1.slice(0, 3)
+```
+
+## `.select()` with aggregation
+
+```{python}
+df1.select(
+    pl.col("income").mean().round().alias("avg_income"),
+    pl.col("age").max().alias("max_age"),
+)
+```
+
+## `.group_by()`
+
+```{python}
+df1.group_by("status").agg(
+    pl.col("income").mean().round(decimals=2).alias("Average Income"),
+    pl.col('age').min().alias("Young_Gens")
+)
+```
+
+## `.group_by().count()`
+
+```{python}
+df1.group_by('status').len()
+```
+
+## Left join `how = 'left'`
+
+```{python}
+df_combined_left = df1.join(df2, on = "id", how="left")
+df_combined_left
+```
+
+## Right join `how = 'right'`
+
+```{python}
+df_combined_right = df1.join(df2, on="id", how="right")
+df_combined_right
+```
+
+## Inner join `how = "inner"`
+
+```{python}
+df_combined_inner = df1.join(df2, on="id", how="inner")
+df_combined_inner
+```
+
+## Outer join `how = "inner"`
+
+```{python}
+df_combined_inner = df1.join(df2, on="id", how="inner")
+df_combined_inner
+```
+
+## Selectors
+### `pl.all()`, `pl.col()`
+
+- select by data type
+  
+```{python}
+df_combined_left.select(
+    pl.col(pl.Int64)
+)
+```
+
+```{python}
+df_combined_left.select(pl.all().exclude(["income_k"]))
+```
+
+## Chained conditional
+
+```{python}
+df_combined_left.with_columns(
+    pl.when(pl.col("age") < 30).then(pl.lit("young"))
+    .when(pl.col('age') < 40)
+    .then(pl.lit("Mid"))
+    .otherwise(pl.lit("Senior"))
+    .alias("age_group")
+)
+```
+
+## Prefix selection
+
+```{python}
+df_combined_inner.select(pl.col("^prefix.*$"))
+```
+
+## Regex in `pl.col()`
+- selecting the all columns containing _score_ in the dataframe
+
+```{python}
+df_combined_inner.select(pl.col("^.*score.*$"))
+```
+
+__using polars selector__
+
+```{python}
+import polars.selectors as cs
+
+df_combined_inner.select(cs.matches("score"))
+```
