@@ -74,14 +74,14 @@
     "href": "index.html#group_by",
     "title": "Polars as dplyr Introdution",
     "section": ".group_by()",
-    "text": ".group_by()\n\ndf1.group_by(\"status\").agg(\n    pl.col(\"income\").mean().round(decimals=2).alias(\"Average Income\"),\n    pl.col('age').min().alias(\"Young_Gens\")\n)\n\n\nshape: (2, 3)\n\n\n\nstatus\nAverage Income\nYoung_Gens\n\n\nstr\nf64\ni64\n\n\n\n\n\"inactive\"\n66000.0\n30\n\n\n\"active\"\n56750.0\n22"
+    "text": ".group_by()\n\ndf1.group_by(\"status\").agg(\n    pl.col(\"income\").mean().round(decimals=2).alias(\"Average Income\"),\n    pl.col('age').min().alias(\"Young_Gens\")\n)\n\n\nshape: (2, 3)\n\n\n\nstatus\nAverage Income\nYoung_Gens\n\n\nstr\nf64\ni64\n\n\n\n\n\"active\"\n56750.0\n22\n\n\n\"inactive\"\n66000.0\n30"
   },
   {
     "objectID": "index.html#group_by.count",
     "href": "index.html#group_by.count",
     "title": "Polars as dplyr Introdution",
     "section": ".group_by().count()",
-    "text": ".group_by().count()\n\ndf1.group_by('status').len()\n\n\nshape: (2, 2)\n\n\n\nstatus\nlen\n\n\nstr\nu32\n\n\n\n\n\"inactive\"\n2\n\n\n\"active\"\n4"
+    "text": ".group_by().count()\n\ndf1.group_by('status').len()\n\n\nshape: (2, 2)\n\n\n\nstatus\nlen\n\n\nstr\nu32\n\n\n\n\n\"active\"\n4\n\n\n\"inactive\"\n2"
   },
   {
     "objectID": "index.html#left-join-how-left",
