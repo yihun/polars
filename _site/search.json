@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Polars as dplyr Introdution",
     "section": "",
-    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl\nfrom great_tables import GT, html\nfrom sqlalchemy import true\nfrom great_tables._options import opt_table_font\nfrom great_tables._options import tab_options"
+    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl"
   },
   {
     "objectID": "index.html#load-polars",
     "href": "index.html#load-polars",
     "title": "Polars as dplyr Introdution",
     "section": "",
-    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl\nfrom great_tables import GT, html\nfrom sqlalchemy import true\nfrom great_tables._options import opt_table_font\nfrom great_tables._options import tab_options"
+    "text": "uv pip install polars\nuv pip install great_tables\nIn this notebook a will try to attempt to use most used dplyr verbs that I have widely used in r Tidyverse Ecosystem.\n\n\nimport polars as pl"
   },
   {
     "objectID": "index.html#dataset",

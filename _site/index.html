@@ -3913,12 +3913,8 @@ color: #20306B;
 <li><code>uv pip install great_tables</code></li>
 <li>In this notebook a will try to attempt to use most used <code>dplyr</code> verbs that I have widely used in <code>r</code> Tidyverse Ecosystem.</li>
 </ul>
-<div id="e2a32502" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, html</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> true</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="im">from</span> great_tables._options <span class="im">import</span> opt_table_font</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> great_tables._options <span class="im">import</span> tab_options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e44d2374" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="dataset" class="level2">
@@ -3939,7 +3935,7 @@ color: #20306B;
 <span id="cb2-13"><a href="#cb2-13"></a>df2 <span class="op">=</span> pl.DataFrame({<span class="st">&quot;id&quot;</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span>], <span class="st">&quot;city&quot;</span>: [<span class="st">&quot;NY&quot;</span>, <span class="st">&quot;LA&quot;</span>, <span class="st">&quot;Dallas&quot;</span>, <span class="st">&quot;Houston&quot;</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>column names as a the dataframe.</strong></p>
-<div id="b5512d57" class="cell" data-execution_count="3">
+<div id="1faf63f5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>pl.DataFrame({<span class="st">&quot;Name of the dataframe&quot;</span>: <span class="bu">list</span>(df1.columns)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div><style>
@@ -3989,7 +3985,7 @@ white-space: pre-wrap;
 </section>
 <section id="select" class="level2">
 <h2 class="anchored" data-anchor-id="select"><code>.select()</code></h2>
-<div id="f7106e25" class="cell" data-execution_count="4">
+<div id="02dc0733" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df1.select([<span class="st">&quot;id&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;income&quot;</span>]).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div><style>
@@ -4052,7 +4048,7 @@ white-space: pre-wrap;
 </section>
 <section id="filter" class="level2">
 <h2 class="anchored" data-anchor-id="filter"><code>.filter()</code></h2>
-<div id="c2e432f9" class="cell" data-execution_count="5">
+<div id="68fd7d56" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>df1.<span class="bu">filter</span>(pl.col(<span class="st">&quot;age&quot;</span>) <span class="op">&gt;</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div><style>
@@ -4110,7 +4106,7 @@ white-space: pre-wrap;
 </div>
 <section id="filter-with-chain-method" class="level3">
 <h3 class="anchored" data-anchor-id="filter-with-chain-method"><code>.filter()</code> with <em><code>chain</code></em> method</h3>
-<div id="5a15be67" class="cell" data-execution_count="6">
+<div id="4a18710a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>    df1</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    .<span class="bu">filter</span>(pl.col(<span class="st">&quot;age&quot;</span>)<span class="op">&gt;</span> <span class="dv">30</span>)</span>
@@ -4162,7 +4158,7 @@ white-space: pre-wrap;
 </section>
 <section id="with_columns" class="level2">
 <h2 class="anchored" data-anchor-id="with_columns"><code>.with_columns()</code></h2>
-<div id="54dc99a6" class="cell" data-execution_count="7">
+<div id="1750afd3" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>df1.with_columns(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>    (pl.col(<span class="st">&quot;income&quot;</span>)<span class="op">/</span><span class="dv">1000</span>).alias(<span class="st">&quot;income_k&quot;</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a>).select([<span class="st">&#39;income&#39;</span>, <span class="st">&quot;income_k&quot;</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4217,7 +4213,7 @@ white-space: pre-wrap;
 </div>
 </div>
 <p><strong>mutate with multiple columns</strong></p>
-<div id="a90beaf1" class="cell" data-execution_count="8">
+<div id="018adbc5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>df1.with_columns(</span>
 <span id="cb8-2"><a href="#cb8-2"></a>    pl.<span class="bu">all</span>().exclude([<span class="st">&#39;status&#39;</span>, <span class="st">&#39;group&#39;</span>,<span class="st">&#39;id&#39;</span>])<span class="op">*</span><span class="dv">2</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4311,7 +4307,7 @@ white-space: pre-wrap;
 </div>
 </div>
 </div>
-<div id="30c27743" class="cell" data-execution_count="9">
+<div id="b5c04370" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>df1.with_columns(</span>
 <span id="cb9-2"><a href="#cb9-2"></a>    [</span>
 <span id="cb9-3"><a href="#cb9-3"></a>        (pl.col(col) <span class="op">*</span> <span class="dv">2</span>).alias(<span class="ss">f&quot;</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_prod2&quot;</span>)</span>
@@ -4444,7 +4440,7 @@ white-space: pre-wrap;
 </section>
 <section id="sort" class="level2">
 <h2 class="anchored" data-anchor-id="sort"><code>sort()</code></h2>
-<div id="693c388f" class="cell" data-execution_count="10">
+<div id="2dbb48f5" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>df1.sort(<span class="st">&quot;income&quot;</span>, descending<span class="op">=</span><span class="va">True</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div><style>
@@ -4539,7 +4535,7 @@ white-space: pre-wrap;
 </section>
 <section id="rename" class="level2">
 <h2 class="anchored" data-anchor-id="rename"><code>.rename()</code></h2>
-<div id="810ad615" class="cell" data-execution_count="11">
+<div id="22fe56e5" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>df1.rename({<span class="st">&quot;income&quot;</span>: <span class="st">&quot;annual_income&quot;</span>}).select([<span class="st">&#39;id&#39;</span>, <span class="st">&#39;age&#39;</span>, <span class="st">&#39;group&#39;</span>, <span class="st">&#39;annual_income&#39;</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div><style>
@@ -4610,7 +4606,7 @@ white-space: pre-wrap;
 </section>
 <section id="slice" class="level2">
 <h2 class="anchored" data-anchor-id="slice"><code>.slice()</code></h2>
-<div id="3a420a07" class="cell" data-execution_count="12">
+<div id="414c67c8" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>df1.<span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div><style>
@@ -4678,7 +4674,7 @@ white-space: pre-wrap;
 </section>
 <section id="select-with-aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="select-with-aggregation"><code>.select()</code> with aggregation</h2>
-<div id="177de35d" class="cell" data-execution_count="13">
+<div id="7836a865" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>df1.select(</span>
 <span id="cb13-2"><a href="#cb13-2"></a>    pl.col(<span class="st">&quot;income&quot;</span>).mean().<span class="bu">round</span>().alias(<span class="st">&quot;avg_income&quot;</span>),</span>
 <span id="cb13-3"><a href="#cb13-3"></a>    pl.col(<span class="st">&quot;age&quot;</span>).<span class="bu">max</span>().alias(<span class="st">&quot;max_age&quot;</span>),</span>
@@ -4716,7 +4712,7 @@ white-space: pre-wrap;
 </section>
 <section id="group_by" class="level2">
 <h2 class="anchored" data-anchor-id="group_by"><code>.group_by()</code></h2>
-<div id="47d31a5e" class="cell" data-execution_count="14">
+<div id="c6077de6" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>df1.group_by(<span class="st">&quot;status&quot;</span>).agg(</span>
 <span id="cb14-2"><a href="#cb14-2"></a>    pl.col(<span class="st">&quot;income&quot;</span>).mean().<span class="bu">round</span>(decimals<span class="op">=</span><span class="dv">2</span>).alias(<span class="st">&quot;Average Income&quot;</span>),</span>
 <span id="cb14-3"><a href="#cb14-3"></a>    pl.col(<span class="st">&#39;age&#39;</span>).<span class="bu">min</span>().alias(<span class="st">&quot;Young_Gens&quot;</span>)</span>
@@ -4762,7 +4758,7 @@ white-space: pre-wrap;
 </section>
 <section id="group_by.count" class="level2">
 <h2 class="anchored" data-anchor-id="group_by.count"><code>.group_by().count()</code></h2>
-<div id="e4eb1745" class="cell" data-execution_count="15">
+<div id="c9db3401" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>df1.group_by(<span class="st">&#39;status&#39;</span>).<span class="bu">len</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div><style>
@@ -4801,7 +4797,7 @@ white-space: pre-wrap;
 </section>
 <section id="left-join-how-left" class="level2">
 <h2 class="anchored" data-anchor-id="left-join-how-left">Left join <code>how = &#39;left&#39;</code></h2>
-<div id="3eb5da4b" class="cell" data-execution_count="16">
+<div id="11d0de60" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>df_combined_left <span class="op">=</span> df1.join(df2, on <span class="op">=</span> <span class="st">&quot;id&quot;</span>, how<span class="op">=</span><span class="st">&quot;left&quot;</span>)</span>
 <span id="cb16-2"><a href="#cb16-2"></a>df_combined_left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -4905,7 +4901,7 @@ white-space: pre-wrap;
 </section>
 <section id="right-join-how-right" class="level2">
 <h2 class="anchored" data-anchor-id="right-join-how-right">Right join <code>how = &#39;right&#39;</code></h2>
-<div id="3f0f52a5" class="cell" data-execution_count="17">
+<div id="761a16e3" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>df_combined_right <span class="op">=</span> df1.join(df2, on<span class="op">=</span><span class="st">&quot;id&quot;</span>, how<span class="op">=</span><span class="st">&quot;right&quot;</span>)</span>
 <span id="cb17-2"><a href="#cb17-2"></a>df_combined_right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -4989,7 +4985,7 @@ white-space: pre-wrap;
 </section>
 <section id="inner-join-how-inner" class="level2">
 <h2 class="anchored" data-anchor-id="inner-join-how-inner">Inner join <code>how = &quot;inner&quot;</code></h2>
-<div id="a3f590b1" class="cell" data-execution_count="18">
+<div id="18b19a96" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>df_combined_inner <span class="op">=</span> df1.join(df2, on<span class="op">=</span><span class="st">&quot;id&quot;</span>, how<span class="op">=</span><span class="st">&quot;inner&quot;</span>)</span>
 <span id="cb18-2"><a href="#cb18-2"></a>df_combined_inner</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
@@ -5063,7 +5059,7 @@ white-space: pre-wrap;
 </section>
 <section id="outer-join-how-inner" class="level2">
 <h2 class="anchored" data-anchor-id="outer-join-how-inner">Outer join <code>how = &quot;inner&quot;</code></h2>
-<div id="d691e436" class="cell" data-execution_count="19">
+<div id="4509a08e" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>df_combined_inner <span class="op">=</span> df1.join(df2, on<span class="op">=</span><span class="st">&quot;id&quot;</span>, how<span class="op">=</span><span class="st">&quot;inner&quot;</span>)</span>
 <span id="cb19-2"><a href="#cb19-2"></a>df_combined_inner</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -5142,7 +5138,7 @@ white-space: pre-wrap;
 <ul>
 <li>select by data type</li>
 </ul>
-<div id="bffc5554" class="cell" data-execution_count="20">
+<div id="179546f0" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>df_combined_left.select(</span>
 <span id="cb20-2"><a href="#cb20-2"></a>    pl.col(pl.Int64)</span>
 <span id="cb20-3"><a href="#cb20-3"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -5220,7 +5216,7 @@ white-space: pre-wrap;
 </div>
 </div>
 </div>
-<div id="f74067bf" class="cell" data-execution_count="21">
+<div id="f56aeccc" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>df_combined_left.select(pl.<span class="bu">all</span>().exclude([<span class="st">&quot;income_k&quot;</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <div><style>
@@ -5324,7 +5320,7 @@ white-space: pre-wrap;
 </section>
 <section id="chained-conditional" class="level2">
 <h2 class="anchored" data-anchor-id="chained-conditional">Chained conditional</h2>
-<div id="c1d8dbf0" class="cell" data-execution_count="22">
+<div id="86b94ea3" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>df_combined_left.with_columns(</span>
 <span id="cb22-2"><a href="#cb22-2"></a>    pl.when(pl.col(<span class="st">&quot;age&quot;</span>) <span class="op">&lt;</span> <span class="dv">30</span>).then(pl.lit(<span class="st">&quot;young&quot;</span>))</span>
 <span id="cb22-3"><a href="#cb22-3"></a>    .when(pl.col(<span class="st">&#39;age&#39;</span>) <span class="op">&lt;</span> <span class="dv">40</span>)</span>
@@ -5441,7 +5437,7 @@ white-space: pre-wrap;
 </section>
 <section id="prefix-selection" class="level2">
 <h2 class="anchored" data-anchor-id="prefix-selection">Prefix selection</h2>
-<div id="7670a027" class="cell" data-execution_count="23">
+<div id="2267428a" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>df_combined_inner.select(pl.col(<span class="st">&quot;^prefix.*$&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <div><style>
@@ -5487,7 +5483,7 @@ white-space: pre-wrap;
 <ul>
 <li>selecting the all columns containing <em>score</em> in the dataframe</li>
 </ul>
-<div id="ec012239" class="cell" data-execution_count="24">
+<div id="a1069aeb" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>df_combined_inner.select(pl.col(<span class="st">&quot;^.*score.*$&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <div><style>
@@ -5528,7 +5524,7 @@ white-space: pre-wrap;
 </div>
 </div>
 <p><strong>using polars selector</strong></p>
-<div id="1eac1b8e" class="cell" data-execution_count="25">
+<div id="25e8b795" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="im">import</span> polars.selectors <span class="im">as</span> cs</span>
 <span id="cb25-2"><a href="#cb25-2"></a></span>
 <span id="cb25-3"><a href="#cb25-3"></a>df_combined_inner.select(cs.matches(<span class="st">&quot;score&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
